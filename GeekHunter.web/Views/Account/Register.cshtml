@@ -1,0 +1,51 @@
+﻿@model GeekHunter.Models.RegisterViewModel
+
+<h2>Register</h2>
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Skills, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @for (var i = 0; i < Model.Skills.Count; i++)
+            {
+                var skill = Model.Skills[i];
+                <div class="checkbox">
+                    @Html.HiddenFor(model => Model.Skills[i].Id)
+                    @Html.HiddenFor(model => Model.Skills[i].Name)
+                    @Html.CheckBoxFor(model => Model.Skills[i].Selected)
+                    @Html.LabelFor(model=> Model.Skills[i].Selected, Model.Skills[i].Name)
+                </div>
+            }
+        </div>
+    </div>
+    <p class="@(Model.Success ? "text-success" : "text-danger") ">@Model.Message</p>
+
+    if (!Model.Success)
+    {
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-default" value="Register" />
+            </div>
+        </div>
+    }
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

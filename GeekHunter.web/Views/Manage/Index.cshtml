@@ -1,0 +1,48 @@
+﻿@model GeekHunter.Models.CandidatesListModel
+<div class="container">
+    <h1>View candidate</h1>
+    @using (Html.BeginForm("Index", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        <div class="form-group">
+            @Html.LabelFor(m => m.Skills, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @for (var i = 0; i < Model.Skills.Count; i++)
+                {
+                    <div class="checkbox">
+                        @Html.HiddenFor(model => Model.Skills[i].Id)
+                        @Html.HiddenFor(model => Model.Skills[i].Name)
+                        @Html.CheckBoxFor(model => Model.Skills[i].Selected)
+                        @Html.LabelFor(model=> Model.Skills[i].Selected, Model.Skills[i].Name)
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-default" value="Search" />
+                <a href="/manage" class="btn btn-default" >View All</a>
+            </div>
+        </div>
+    }
+    <table class="table table-striped">
+        <thead>
+            <tr><td colspan="2">@Model.Candidates.Count @(Model.Candidates.Count > 1 ? "candidates" : "candidate")  found</td></tr>
+            <tr>
+                <td>Name</td>
+                <td>Skills</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var candidate in Model.Candidates)
+            {
+                <tr>
+                    <td>@candidate.FirstName @candidate.LastName</td>
+                    <td>@string.Join(", ", candidate.Skills.Select(x => x.Name))</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+
