@@ -25,3 +25,6 @@ README.md of your fork.
 Good luck!
 
 P.S: And unit tests! We love unit tests!
+
+-----------------
+Please set the GeekHunter.web project as setup project
